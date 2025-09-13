@@ -1,5 +1,11 @@
 "use client"
-import React, { useState } from 'react';
+import { Iconoir } from 'iconoir-react';
+import React, { useState } from 'react'
+import { FaArchive } from 'react-icons/fa';
+import { FaNoteSticky } from 'react-icons/fa6';
+import { IoIosArchive } from 'react-icons/io';
+import { MdOutlineSpaceBar } from "react-icons/md";
+import { PiNoteBlankFill } from 'react-icons/pi';
 
 const NotesApp = () => {
   const [selectedNote, setSelectedNote] = useState('React Performance Optimization');
@@ -49,6 +55,18 @@ const NotesApp = () => {
       date: '28 Oct 2025',
       content: 'Planning trip to Japan...'
     },
+    {
+      title: 'Japan Travel Planning',
+      tags: ['Travel', 'Personal'],
+      date: '28 Oct 2025',
+      content: 'Planning trip to Japan...'
+    },
+    {
+      title: 'Japan Travel Planning',
+      tags: ['Travel', 'Personal'],
+      date: '28 Oct 2025',
+      content: 'Planning trip to Japan...'
+    },
   ];
 
   const currentNote = notes.find(note => note.title === selectedNote) || notes[0];
@@ -57,20 +75,20 @@ const NotesApp = () => {
     <div className="flex h-screen bg-gray-50">      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-6 h-6 bg-blue-900 rounded flex items-center justify-center">
-            </div>
-            <span className="font-semibold text-lg text-gray-900">Notes</span>
+            {/* <div className="w-6 h-6 bg-blue-900 rounded flex items-center justify-center"></div> */}
+            <MdOutlineSpaceBar className="bg-black rounded "/>
+            <span className="font-semibold text-lg text-gray-900">BlankSpace</span>
           </div>
         </div>
 
         <div className="p-4">
           <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer">
-            <span className="text-sm">sticker</span>
+            <FaNoteSticky />
             <span className="text-sm font-medium">All Notes</span>
             <span className="text-xs text-gray-500 ml-auto">›</span>
           </div>
           <div className="flex items-center gap-2 text-gray-500 mb-4 cursor-pointer">
-            <span>sticker</span>
+            <IoIosArchive />
             <span className="text-sm">Archived Notes</span>
           </div>
         </div>
