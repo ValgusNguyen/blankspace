@@ -75,7 +75,6 @@ const NotesApp = () => {
     <div className="flex h-screen bg-gray-50">      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center gap-2 mb-4">
-            {/* <div className="w-6 h-6 bg-blue-900 rounded flex items-center justify-center"></div> */}
             <MdOutlineSpaceBar className="bg-black rounded "/>
             <span className="font-semibold text-lg text-gray-900">BlankSpace</span>
           </div>
