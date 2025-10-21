@@ -1,11 +1,9 @@
 "use client"
-import { Iconoir } from 'iconoir-react';
 import React, { useState } from 'react'
-import { FaArchive } from 'react-icons/fa';
 import { FaNoteSticky } from 'react-icons/fa6';
 import { IoIosArchive } from 'react-icons/io';
 import { MdOutlineSpaceBar } from "react-icons/md";
-import { PiNoteBlankFill } from 'react-icons/pi';
+import { VscTelescope } from 'react-icons/vsc';
 
 const NotesApp = () => {
   const [selectedNote, setSelectedNote] = useState('React Performance Optimization');
@@ -109,8 +107,11 @@ const NotesApp = () => {
         <div className="w-80 bg-white border-r border-gray-200">
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">All Notes</h2>
-            <button className="w-full bg-blue-900 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-              + Create New Note
+            <button className="w-full bg-[#213555] text-white py-2 px-4 rounded-lg font-medium hover:bg-[#163969] transition-colors">
+                  <div className='flex justify-center'>
+                  <VscTelescope  className='m-0 p-0'/>
+                  Create New Note 
+                  </div>
             </button>
           </div>
           <div className="overflow-y-auto">
@@ -185,9 +186,10 @@ const NotesApp = () => {
 
             <div className="flex-1 p-6 bg-gray-50">
               <div className="bg-white rounded-lg p-6 h-full">
-                <pre className="whitespace-pre-wrap text-gray-800 font-sans text-sm leading-relaxed">
-{currentNote.content}
+                <pre className="whitespace-pre-wrap text-gray-800 font-sans text-sm leading-relaxed">{currentNote.content}
                 </pre>
+                <input type='text'  />
+                
               </div>
             </div>
           </div>
