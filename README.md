@@ -34,6 +34,6 @@ A simple note-taking app.
 
 - **Framework:** Next.js / React
 
-- **Database:** Supabase (store notes, images, bookmarks, etc.)
+- **Database:** Postgres + object storage
 
 - **API:** Fetch initial data on first load _(research best approach)_
