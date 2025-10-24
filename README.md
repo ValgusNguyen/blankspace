@@ -1,22 +1,39 @@
+# 📝 The Blank Space
 
-This is a taking-Note app _ the Blank space
-_The goals:
-*first mvp:
-    + Create, read, update, and delete notes
-    + List notes - by date (newest)
-    + Select color theme
-    + View notes with specific tags (front matter* research more)
-    + auto save notes
-    + Can write and render markdown
-    + It's need to have a toggle * ( or just use markdown and toggle by a heading)
-    
-    
-    + Search notes by title, tag, and content
-    + Navigate the whole app and perform all actions using only their keyboard
-    + View the optimal layout for the interface depending on their device's screen size
-    + See hover and focus states for all interactive elements on the page
+A simple note-taking app.
 
-_ Using:
-    + Nextjs / React
-    + Supabase to store note data (notes, images, bookmark,...)
-    + call API to get data from 1st time (*/ reseach)
+## 🎯 MVP Goals
+
+- Create, read, update, and delete notes
+
+- List notes by date (newest first)
+
+- Choose a color theme
+
+- View notes by tags _(use front matter --- research more)_
+
+- Auto-save notes
+
+- Write and render Markdown
+
+- Toggle sections (or use Markdown headings)
+
+### Search & Navigation
+
+- Search notes by title, tag, or content
+
+- Navigate the whole app using only the keyboard
+
+### UI / UX
+
+- Responsive layout for all screen sizes
+
+- Clear hover and focus states for interactive elements
+
+## ⚙️ Tech Stack
+
+- **Framework:** Next.js / React
+
+- **Database:** Supabase (store notes, images, bookmarks, etc.)
+
+- **API:** Fetch initial data on first load _(research best approach)_
