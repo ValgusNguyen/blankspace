@@ -1,4 +1,4 @@
-import { envSchema } from "@/lib/env/schema";
+import { envSchema } from "@/lib/env";
 import type { NextConfig } from "next";
 
 envSchema.parse(process.env);
