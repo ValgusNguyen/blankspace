@@ -76,17 +76,19 @@ const NotesApp = () => {
               BlankSpace
             </span>
           </div>
-          <div className='items-center text-gray-700 mb-2 cursor-pointer cursor-pointer'>
-            <span className=' text-l font-medium text-gray-500 '>All Notes</span>
+          <div className="items-center text-gray-700 mb-2 cursor-pointer cursor-pointer">
+            <span className=" text-l font-medium text-gray-500 ">
+              All Notes
+            </span>
           </div>
         </div>
 
         {/* <div className="p-4"> */}
-          {/* <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer"> */}
-            {/* <FaNoteSticky /> */}
-            {/* <span className="text-sm font-medium">All Notes</span> */}
-            {/* <span className="text-xs text-gray-500 ml-auto">›</span> */}
-          {/* </div> */}
+        {/* <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer"> */}
+        {/* <FaNoteSticky /> */}
+        {/* <span className="text-sm font-medium">All Notes</span> */}
+        {/* <span className="text-xs text-gray-500 ml-auto">›</span> */}
+        {/* </div> */}
         {/* </div> */}
       </div>
       <div className="flex-1 flex">
