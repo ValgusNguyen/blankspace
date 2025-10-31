@@ -82,14 +82,6 @@ const NotesApp = () => {
             </span>
           </div>
         </div>
-
-        {/* <div className="p-4"> */}
-        {/* <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer"> */}
-        {/* <FaNoteSticky /> */}
-        {/* <span className="text-sm font-medium">All Notes</span> */}
-        {/* <span className="text-xs text-gray-500 ml-auto">›</span> */}
-        {/* </div> */}
-        {/* </div> */}
       </div>
       <div className="flex-1 flex">
         <div className="w-80 bg-white border-r border-gray-200">
