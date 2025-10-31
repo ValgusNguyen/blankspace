@@ -11,13 +11,6 @@ const NotesApp = () => {
   );
   const [isEditing, setIsEditing] = useState(false);
 
-  const tags = [
-    { name: "Dev", count: 0 },
-    { name: "Cooking", count: 0 },
-    { name: "Health", count: 0 },
-    { name: "Personal", count: 0 },
-  ];
-
   const notes = [
     {
       title: "Japan Travel Planning",
@@ -83,34 +76,18 @@ const NotesApp = () => {
               BlankSpace
             </span>
           </div>
-        </div>
-
-        <div className="p-4">
-          <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer">
-            <FaNoteSticky />
-            <span className="text-sm font-medium">All Notes</span>
-            <span className="text-xs text-gray-500 ml-auto">›</span>
-          </div>
-          <div className="flex items-center gap-2 text-gray-500 mb-4 cursor-pointer">
-            <IoIosArchive />
-            <span className="text-sm">Archived Notes</span>
+          <div className='items-center text-gray-700 mb-2 cursor-pointer cursor-pointer'>
+            <span className=' text-l font-medium text-gray-500 '>All Notes</span>
           </div>
         </div>
 
-        <div className="px-4 mb-4">
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Tags</h3>
-          <div className="space-y-1">
-            {tags.map((tag) => (
-              <div
-                key={tag.name}
-                className="flex items-center gap-2 text-gray-600 cursor-pointer hover:text-gray-800 py-1"
-              >
-                <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
-                <span className="text-sm">{tag.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* <div className="p-4"> */}
+          {/* <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer"> */}
+            {/* <FaNoteSticky /> */}
+            {/* <span className="text-sm font-medium">All Notes</span> */}
+            {/* <span className="text-xs text-gray-500 ml-auto">›</span> */}
+          {/* </div> */}
+        {/* </div> */}
       </div>
       <div className="flex-1 flex">
         <div className="w-80 bg-white border-r border-gray-200">
