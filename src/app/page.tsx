@@ -1,97 +1,107 @@
-"use client"
-import React, { useState } from 'react'
-import { FaNoteSticky } from 'react-icons/fa6';
-import { IoIosArchive } from 'react-icons/io';
+"use client";
+import React, { useState } from "react";
+import { FaNoteSticky } from "react-icons/fa6";
+import { IoIosArchive } from "react-icons/io";
 import { MdOutlineSpaceBar } from "react-icons/md";
-import { VscTelescope } from 'react-icons/vsc';
+import { VscTelescope } from "react-icons/vsc";
 
 const NotesApp = () => {
-  const [selectedNote, setSelectedNote] = useState('React Performance Optimization');
+  const [selectedNote, setSelectedNote] = useState(
+    "React Performance Optimization",
+  );
   const [isEditing, setIsEditing] = useState(false);
 
   const notes = [
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
     {
-      title: 'Japan Travel Planning',
-      tags: ['Travel', 'Personal'],
-      date: '28 Oct 2025',
-      content: 'Planning trip to Japan...'
+      title: "Japan Travel Planning",
+      tags: ["Travel", "Personal"],
+      date: "28 Oct 2025",
+      content: "Planning trip to Japan...",
     },
   ];
 
-  const currentNote = notes.find(note => note.title === selectedNote) || notes[0];
+  const currentNote =
+    notes.find((note) => note.title === selectedNote) || notes[0];
 
   return (
-    <div className="flex h-screen bg-gray-50">      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+    <div className="flex h-screen bg-gray-50">
+      {" "}
+      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-4 border-b border-gray-200">
           <div className="flex items-center gap-2 mb-4">
-            <MdOutlineSpaceBar className="bg-black rounded "/>
-            <span className="font-semibold text-lg text-gray-900">BlankSpace</span>
+            <MdOutlineSpaceBar className="bg-black rounded " />
+            <span className="font-semibold text-lg text-gray-900">
+              BlankSpace
+            </span>
           </div>
-          <div className='items-center text-gray-700 mb-2 cursor-pointer cursor-pointer'>
-            <span className=' text-l font-medium text-gray-500 '>All Notes</span>
+          <div className="items-center text-gray-700 mb-2 cursor-pointer cursor-pointer">
+            <span className=" text-l font-medium text-gray-500 ">
+              All Notes
+            </span>
           </div>
         </div>
 
         {/* <div className="p-4"> */}
-          {/* <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer"> */}
-            {/* <FaNoteSticky /> */}
-            {/* <span className="text-sm font-medium">All Notes</span> */}
-            {/* <span className="text-xs text-gray-500 ml-auto">›</span> */}
-          {/* </div> */}
+        {/* <div className="flex items-center gap-2 text-gray-700 mb-2 cursor-pointer"> */}
+        {/* <FaNoteSticky /> */}
+        {/* <span className="text-sm font-medium">All Notes</span> */}
+        {/* <span className="text-xs text-gray-500 ml-auto">›</span> */}
+        {/* </div> */}
         {/* </div> */}
       </div>
-
       <div className="flex-1 flex">
         <div className="w-80 bg-white border-r border-gray-200">
           <div className="p-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">All Notes</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              All Notes
+            </h2>
             <button className="w-full bg-[#213555] text-white py-2 px-4 rounded-lg font-medium hover:bg-[#163969] transition-colors">
-                  <div className='flex justify-center'>
-                  <VscTelescope  className='m-0 p-0'/>
-                  Create New Note 
-                  </div>
+              <div className="flex justify-center">
+                <VscTelescope className="m-0 p-0" />
+                Create New Note
+              </div>
             </button>
           </div>
           <div className="overflow-y-auto">
@@ -99,7 +109,9 @@ const NotesApp = () => {
               <div
                 key={note.title}
                 className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
-                  selectedNote === note.title ? 'bg-blue-50 border-l-4 border-l-blue-900' : ''
+                  selectedNote === note.title
+                    ? "bg-blue-50 border-l-4 border-l-blue-900"
+                    : ""
                 }`}
                 onClick={() => setSelectedNote(note.title)}
               >
@@ -121,7 +133,6 @@ const NotesApp = () => {
         </div>
 
         <div className="flex-1 flex flex-col">
-
           <div className="p-4 border-b border-gray-200 bg-white flex items-center justify-between">
             <div className="relative flex-1 max-w-md">
               <input
@@ -134,14 +145,18 @@ const NotesApp = () => {
 
           <div className="flex-1 flex flex-col">
             <div className="p-6 bg-white border-b border-gray-200">
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">{currentNote.title}</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                {currentNote.title}
+              </h1>
               <div className="flex items-center gap-4 text-sm text-gray-500">
                 <div className="flex items-center gap-1">
                   <span>sticker</span>
                   <span>Tags</span>
                   <div className="flex gap-1 ml-2">
                     {currentNote.tags.map((tag) => (
-                      <span key={tag} className="text-gray-700">{tag}</span>
+                      <span key={tag} className="text-gray-700">
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -151,7 +166,7 @@ const NotesApp = () => {
                   <span className="text-gray-700">{currentNote.date}</span>
                 </div>
               </div>
-              
+
               <div className="flex gap-2 mt-4">
                 <button className="flex items-center gap-2 px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded border">
                   <span>sticker</span>
@@ -166,10 +181,10 @@ const NotesApp = () => {
 
             <div className="flex-1 p-6 bg-gray-50">
               <div className="bg-white rounded-lg p-6 h-full">
-                <pre className="whitespace-pre-wrap text-gray-800 font-sans text-sm leading-relaxed">{currentNote.content}
+                <pre className="whitespace-pre-wrap text-gray-800 font-sans text-sm leading-relaxed">
+                  {currentNote.content}
                 </pre>
-                <input type='text'  />
-                
+                <input type="text" />
               </div>
             </div>
           </div>
@@ -179,4 +194,4 @@ const NotesApp = () => {
   );
 };
 
-export default NotesApp
+export default NotesApp;
