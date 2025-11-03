@@ -9,9 +9,8 @@ export const notes = pgTable("notes", {
     .primaryKey(),
   title: text().notNull(),
   slug: text().unique().notNull(),
-  excerpt: text().notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp().defaultNow(),
+  updatedAt: timestamp().defaultNow(),
 });
 
 export const notesRelations = relations(notes, ({ one }) => ({
@@ -20,3 +19,5 @@ export const notesRelations = relations(notes, ({ one }) => ({
     references: [noteContents.noteId],
   }),
 }));
+
+export type NewNote = typeof notes.$inferInsert;
