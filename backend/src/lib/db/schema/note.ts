@@ -1,16 +1,17 @@
-import { createId } from "@paralleldrive/cuid2";
-import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { noteContents } from "./note_content";
 
 export const notes = pgTable("notes", {
-  id: text()
-    .$defaultFn(() => createId())
+  id: uuid()
+    .default(sql`uuidv7()`)
     .primaryKey(),
   title: text().notNull(),
-  slug: text().unique().notNull(),
-  createdAt: timestamp().defaultNow(),
-  updatedAt: timestamp().defaultNow(),
+  createdAt: timestamp().defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export const notesRelations = relations(notes, ({ one }) => ({

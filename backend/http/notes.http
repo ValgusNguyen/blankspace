@@ -15,6 +15,24 @@ POST {{baseURL}}/api/notes HTTP/1.1
 Content-Type: application/json
 
 {
-  "slug": "iwr9ug9g3wjthwbyxgs6yqvk",
   "title": "The new note"
 }
+
+
+### Update the note
+
+# @prompt noteID
+
+PATCH {{baseURL}}/api/notes/{{noteID}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Updated note"
+}
+
+
+### Delete note
+
+# @prompt noteID
+
+DELETE {{baseURL}}/api/notes/{{noteID}} HTTP/1.1
