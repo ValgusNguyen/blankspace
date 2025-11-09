@@ -4,7 +4,8 @@ import { createRoute, z } from "@hono/zod-openapi";
 
 export const list = createRoute({
   method: "get",
-  path: "/notes",
+  path: "/",
+  tags: ["Notes"],
   responses: {
     200: {
       description: "Get all notes (no limit offset yet)",
@@ -19,7 +20,8 @@ export const list = createRoute({
 
 export const create = createRoute({
   method: "post",
-  path: "/notes",
+  path: "/",
+  tags: ["Notes"],
   request: {
     body: {
       description: "The note data to create a new note",
@@ -42,7 +44,8 @@ export const create = createRoute({
 
 export const patch = createRoute({
   method: "patch",
-  path: "/notes/:id",
+  path: "/:id",
+  tags: ["Notes"],
   request: {
     params: IdParamsSchema,
     body: {
@@ -66,7 +69,8 @@ export const patch = createRoute({
 
 export const remove = createRoute({
   method: "delete",
-  path: "/notes/:id",
+  path: "/:id",
+  tags: ["Notes"],
   request: {
     params: IdParamsSchema,
   },
