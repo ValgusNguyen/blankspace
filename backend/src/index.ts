@@ -1,10 +1,11 @@
 import { apiRoutes } from "@/routes";
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
+import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 
-const app = new Hono();
+const app = new OpenAPIHono();
 
 app.use(logger());
 app.onError((error, c) => {
@@ -16,6 +17,15 @@ app.onError((error, c) => {
 });
 
 app.route("/api", apiRoutes);
+app.doc("/openapi.json", {
+  openapi: "3.1.0",
+  info: {
+    version: "1.0.0",
+    title: "Blankspace API",
+    description: "API documentation generated with Hono and Zod",
+  },
+});
+app.get("/docs", swaggerUI({ url: "/openapi.json" }));
 
 const server = serve(
   {

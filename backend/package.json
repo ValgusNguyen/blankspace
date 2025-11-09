@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.19.5",
+    "@hono/swagger-ui": "^0.5.2",
     "@hono/zod-openapi": "^1.1.4",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "drizzle-zod": "^0.8.3",
     "esbuild": "^0.25.12",
     "hono": "^4.10.4",
     "npm-run-all": "^4.1.5",
