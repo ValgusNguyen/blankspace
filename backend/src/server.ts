@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
 import { app } from "./app";
+import { env } from "./lib/env";
 
-const port = 3001;
-
+const port = env.PORT;
 const server = serve(
   {
     fetch: app.fetch,
@@ -14,7 +14,7 @@ const server = serve(
 );
 
 const shutdown = () => {
-  console.log("\nShutting down server...");
+  console.log("\nShutting down server blankspace...");
   server.close((err) => {
     if (err) {
       console.error("Error during server close", err);
