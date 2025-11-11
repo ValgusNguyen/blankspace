@@ -17,3 +17,6 @@ export const NoteSchema = createSelectSchema(notes, {
 
 export const NoteCreateSchema = createInsertSchema(notes);
 export const NoteUpdateSchema = createUpdateSchema(notes).pick({ title: true });
+
+export type NoteCreateType = z.infer<typeof NoteCreateSchema>;
+export type NoteUpdateType = z.infer<typeof NoteUpdateSchema>;

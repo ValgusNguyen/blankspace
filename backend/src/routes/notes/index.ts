@@ -1,66 +1,49 @@
-import { db } from "@/lib/db";
-import { notes } from "@/lib/db/schema/note";
-import { eq } from "drizzle-orm";
+import { noteRepository } from "@/repositories/note";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 import { create, list, patch, remove } from "./routes";
-import { OpenAPIHono } from "@hono/zod-openapi";
 
 export const notesRoute = new OpenAPIHono();
 
 notesRoute.openapi(list, async (c) => {
-  const listNotes = await db.select().from(notes).orderBy(notes.id);
+  const listNotes = await noteRepository.findAll();
 
   return c.json(listNotes);
 });
 
 notesRoute.openapi(create, async (c) => {
   const newNote = c.req.valid("json");
-  const createdNote = await db.insert(notes).values(newNote).returning();
+  const createdNote = await noteRepository.create(newNote);
 
-  return c.json(createdNote[0], 201);
+  return c.json(createdNote, 201);
 });
 
 notesRoute.openapi(patch, async (c) => {
   const { id } = c.req.valid("param");
   const data = await c.req.json();
 
-  const findNote = await db
-    .select()
-    .from(notes)
-    .where(eq(notes.id, id))
-    .limit(1);
-
+  const findNote = await noteRepository.findById(id);
   if (!findNote.length) {
     throw new HTTPException(404, {
       message: `Note with ID ${id} not found `,
     });
   }
 
-  const updatedNote = await db
-    .update(notes)
-    .set(data)
-    .where(eq(notes.id, id))
-    .returning();
-
-  return c.json(updatedNote[0], 200);
+  const updatedNote = await noteRepository.update(id, data);
+  return c.json(updatedNote, 200);
 });
 
 notesRoute.openapi(remove, async (c) => {
-  const { id } = c.req.param();
+  const { id } = c.req.valid("param");
 
-  const findNote = await db
-    .select()
-    .from(notes)
-    .where(eq(notes.id, id))
-    .limit(1);
-
+  const findNote = await noteRepository.findById(id);
   if (!findNote.length) {
     throw new HTTPException(404, {
       message: `Note with ID ${id} not found `,
     });
   }
 
-  await db.delete(notes).where(eq(notes.id, id));
+  await noteRepository.delete(id);
 
   return c.body(null, 204);
 });
