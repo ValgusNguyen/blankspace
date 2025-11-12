@@ -3,12 +3,12 @@
   "type": "module",
   "scripts": {
     "dev:tsc": "tsc --watch --preserveWatchOutput",
-    "dev:node": "node --env-file=.env --watch dist/server.cjs",
-    "dev:esbuild": "npm run build --watch",
+    "dev:node": "node --env-file=.env --watch dist/server.js",
+    "dev:esbuild": "node build.js --dev",
     "dev": "run-p dev:*",
     "lint": "tsc",
-    "build": "esbuild src/server.ts --bundle --platform=node --outfile=dist/server.cjs",
-    "start": "node dist/server.cjs"
+    "build": "node build.js",
+    "start": "node --env-file-if-exists=.env dist/server.js"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.5",
@@ -17,7 +17,9 @@
     "drizzle-orm": "^0.44.7",
     "drizzle-zod": "^0.8.3",
     "hono": "^4.10.4",
+    "hono-pino": "^0.10.3",
     "pg": "^8.16.3",
+    "pino": "^10.1.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "globals": "^16.4.0",
     "jiti": "^2.6.1",
     "npm-run-all": "^4.1.5",
+    "pino-pretty": "^13.1.2",
     "prettier": "3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2"
