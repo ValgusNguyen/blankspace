@@ -1,4 +1,9 @@
-import { NoteSchema, NoteCreateSchema, NoteUpdateSchema } from "@/schemas/note";
+import {
+  NoteSchema,
+  NoteCreateSchema,
+  NoteUpdateSchema,
+  NoteWithContentSchema,
+} from "@/schemas/note";
 import { IdParamsSchema } from "@/schemas/param";
 import { createRoute, z } from "@hono/zod-openapi";
 
@@ -12,6 +17,25 @@ export const list = createRoute({
       content: {
         "application/json": {
           schema: z.array(NoteSchema),
+        },
+      },
+    },
+  },
+});
+
+export const detail = createRoute({
+  method: "get",
+  path: "/:id",
+  tags: ["Notes"],
+  request: {
+    params: IdParamsSchema,
+  },
+  responses: {
+    200: {
+      description: "Get note full details",
+      content: {
+        "application/json": {
+          schema: NoteWithContentSchema,
         },
       },
     },

@@ -1,15 +1,36 @@
 import { db } from "@/lib/db";
 import { notes } from "@/lib/db/schema/note";
-import type { NoteCreateType, NoteUpdateType } from "@/schemas/note";
+import type {
+  NoteCreateType,
+  NoteType,
+  NoteUpdateType,
+  NoteWithContentType,
+} from "@/schemas/note";
 import { eq } from "drizzle-orm";
 
 export class NoteRepository {
   async findAll() {
-    return await db.select().from(notes).orderBy(notes.id);
+    return await db.query.notes.findMany();
   }
 
-  async findById(id: string) {
-    return await db.select().from(notes).where(eq(notes.id, id)).limit(1);
+  async findById(
+    id: string,
+    includeContent: true,
+  ): Promise<NoteWithContentType | undefined>;
+
+  async findById(id: string): Promise<NoteType | undefined>;
+
+  async findById(id: string, includeContent = false) {
+    if (includeContent) {
+      return await db.query.notes.findFirst({
+        where: eq(notes.id, id),
+        with: { content: true },
+      });
+    }
+
+    return await db.query.notes.findFirst({
+      where: eq(notes.id, id),
+    });
   }
 
   async create(newNote: NoteCreateType) {

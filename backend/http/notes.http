@@ -9,6 +9,14 @@ GET {{baseURL}}/api/notes HTTP/1.1
 Accept: application/json
 
 
+### Get note detail
+
+# @prompt noteID
+
+GET {{baseURL}}/api/notes/{{noteID}} HTTP/1.1
+Accept: application/json
+
+
 ### Create a new note
 
 POST {{baseURL}}/api/notes HTTP/1.1
