@@ -16,6 +16,7 @@ notesRoute.openapi(list, async (c) => {
 
 notesRoute.openapi(detail, async (c) => {
   const { id } = c.req.valid("param");
+  console.log(id);
 
   const findNote = await noteRepository.findById(id, true);
   if (!findNote) {
@@ -60,7 +61,7 @@ notesRoute.openapi(create, async (c) => {
 
 notesRoute.openapi(patch, async (c) => {
   const { id } = c.req.valid("param");
-  const data = await c.req.json();
+  const data = c.req.valid("json");
 
   const findNote = await noteRepository.findById(id);
   if (!findNote) {
@@ -69,8 +70,15 @@ notesRoute.openapi(patch, async (c) => {
     });
   }
 
-  const updatedNote = await noteRepository.update(id, data);
-  return c.json(updatedNote, 200);
+  if (data.title) {
+    await noteRepository.update(id, { title: data.title });
+  }
+
+  if (data.content) {
+    await noteContentRepository.update(id, data.content);
+  }
+
+  return c.json(findNote, 200);
 });
 
 notesRoute.openapi(remove, async (c) => {

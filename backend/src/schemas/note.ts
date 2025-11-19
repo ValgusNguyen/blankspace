@@ -14,7 +14,7 @@ const NoteTitleSchema = z
   .max(256)
   .openapi({ example: "My Awesome Note" });
 
-const NoteContentSchemaBase = z.string().nullable().openapi({
+const NoteContentSchemaBase = z.string().nullable().default(null).openapi({
   example:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
 });
@@ -43,6 +43,9 @@ export const NoteUpdateSchema = z
   .object({
     title: NoteTitleSchema.optional(),
     content: NoteContentSchemaBase.optional(),
+  })
+  .refine((data) => data.title !== undefined || data !== undefined, {
+    message: "At least one field must be provided for update",
   })
   .openapi("NoteUpdate");
 

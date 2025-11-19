@@ -38,12 +38,8 @@ class NoteRepository {
     return returnData[0] as NoteType;
   }
 
-  async update(
-    id: string,
-    updateData: Pick<InsertNote, "title">,
-    dbOrTx: DBOrTx = db,
-  ) {
-    const updatedData = await dbOrTx
+  async update(id: string, updateData: Pick<InsertNote, "title">) {
+    const updatedData = await db
       .update(notes)
       .set(updateData)
       .where(eq(notes.id, id))

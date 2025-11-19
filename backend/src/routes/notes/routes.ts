@@ -11,6 +11,7 @@ export const list = createRoute({
   method: "get",
   path: "/",
   tags: ["Notes"],
+  summary: "Get all notes metada",
   responses: {
     200: {
       description: "Get all notes (no limit offset yet)",
@@ -25,8 +26,9 @@ export const list = createRoute({
 
 export const detail = createRoute({
   method: "get",
-  path: "/:id",
+  path: "/{id}",
   tags: ["Notes"],
+  summary: "Get the note detail with content",
   request: {
     params: IdParamsSchema,
   },
@@ -46,6 +48,7 @@ export const create = createRoute({
   method: "post",
   path: "/",
   tags: ["Notes"],
+  summary: "Create a new note",
   request: {
     body: {
       description: "The note data to create a new note",
@@ -68,8 +71,9 @@ export const create = createRoute({
 
 export const patch = createRoute({
   method: "patch",
-  path: "/:id",
+  path: "/{id}",
   tags: ["Notes"],
+  summary: "Update an existing note",
   request: {
     params: IdParamsSchema,
     body: {
@@ -93,8 +97,9 @@ export const patch = createRoute({
 
 export const remove = createRoute({
   method: "delete",
-  path: "/:id",
+  path: "/{id}",
   tags: ["Notes"],
+  summary: "Delete a note",
   request: {
     params: IdParamsSchema,
   },
