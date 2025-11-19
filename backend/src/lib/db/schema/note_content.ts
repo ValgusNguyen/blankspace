@@ -7,3 +7,5 @@ export const noteContents = pgTable("note_contents", {
     .references(() => notes.id, { onDelete: "cascade" }),
   content: text(),
 });
+
+export type SelectNoteContent = typeof noteContents.$inferSelect;

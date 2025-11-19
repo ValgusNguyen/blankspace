@@ -23,6 +23,7 @@ POST {{baseURL}}/api/notes HTTP/1.1
 Content-Type: application/json
 
 {
+  "content": "The new note content",
   "title": "The new note"
 }
 

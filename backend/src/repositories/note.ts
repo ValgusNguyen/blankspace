@@ -1,11 +1,11 @@
 import { db } from "@/lib/db";
-import { notes } from "@/lib/db/schema/note";
 import type {
-  NoteCreateType,
-  NoteType,
-  NoteUpdateType,
-  NoteWithContentType,
-} from "@/schemas/note";
+  InsertNote,
+  SelectNote,
+  SelectNoteContent,
+} from "@/lib/db/schema";
+import { notes } from "@/lib/db/schema/note";
+import type { NoteUpdateType } from "@/schemas/note";
 import { eq } from "drizzle-orm";
 
 export class NoteRepository {
@@ -16,9 +16,9 @@ export class NoteRepository {
   async findById(
     id: string,
     includeContent: true,
-  ): Promise<NoteWithContentType | undefined>;
+  ): Promise<(SelectNote & { content: SelectNoteContent }) | undefined>;
 
-  async findById(id: string): Promise<NoteType | undefined>;
+  async findById(id: string): Promise<SelectNote | undefined>;
 
   async findById(id: string, includeContent = false) {
     if (includeContent) {
@@ -33,12 +33,12 @@ export class NoteRepository {
     });
   }
 
-  async create(newNote: NoteCreateType) {
+  async create(newNote: InsertNote) {
     const returnData = await db.insert(notes).values(newNote).returning();
     return returnData[0];
   }
 
-  async update(id: string, updateData: NoteUpdateType) {
+  async update(id: string, updateData: Pick<InsertNote, "title">) {
     const updatedData = await db
       .update(notes)
       .set(updateData)

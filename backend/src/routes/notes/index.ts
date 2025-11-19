@@ -1,4 +1,5 @@
 import { noteRepository } from "@/repositories/note";
+import type { NoteWithContentType } from "@/schemas/note";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 import { create, detail, list, patch, remove } from "./routes";
@@ -13,14 +14,28 @@ notesRoute.openapi(list, async (c) => {
 
 notesRoute.openapi(detail, async (c) => {
   const { id } = c.req.valid("param");
-  const note = await noteRepository.findById(id, true);
+
+  const findNote = await noteRepository.findById(id, true);
+  if (!findNote) {
+    throw new HTTPException(404, {
+      message: `Note with ID ${id} not found `,
+    });
+  }
+
+  const note: NoteWithContentType = {
+    title: findNote.title,
+    id: findNote.id,
+    createdAt: findNote.createdAt,
+    updatedAt: findNote.updatedAt,
+    content: findNote.content?.content,
+  };
 
   return c.json(note);
 });
 
 notesRoute.openapi(create, async (c) => {
   const newNote = c.req.valid("json");
-  const createdNote = await noteRepository.create(newNote);
+  const createdNote = await noteRepository.create({ title: newNote.title });
 
   return c.json(createdNote, 201);
 });

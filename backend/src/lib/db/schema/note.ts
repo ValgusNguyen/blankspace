@@ -20,3 +20,6 @@ export const notesRelations = relations(notes, ({ one }) => ({
     references: [noteContents.noteId],
   }),
 }));
+
+export type SelectNote = typeof notes.$inferSelect;
+export type InsertNote = typeof notes.$inferInsert;
