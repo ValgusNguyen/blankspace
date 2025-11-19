@@ -1,2 +1,2 @@
 export * from "./note";
-export * from "./note_content";
+export * from "./note-content";

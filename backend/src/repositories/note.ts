@@ -1,14 +1,14 @@
-import { db } from "@/lib/db";
+import { db, type DBOrTx } from "@/lib/db";
 import type {
   InsertNote,
   SelectNote,
   SelectNoteContent,
 } from "@/lib/db/schema";
 import { notes } from "@/lib/db/schema/note";
-import type { NoteUpdateType } from "@/schemas/note";
+import type { NoteType } from "@/schemas/note";
 import { eq } from "drizzle-orm";
 
-export class NoteRepository {
+class NoteRepository {
   async findAll() {
     return await db.query.notes.findMany();
   }
@@ -33,13 +33,17 @@ export class NoteRepository {
     });
   }
 
-  async create(newNote: InsertNote) {
-    const returnData = await db.insert(notes).values(newNote).returning();
-    return returnData[0];
+  async create(newNote: InsertNote, dbOrTx: DBOrTx = db) {
+    const returnData = await dbOrTx.insert(notes).values(newNote).returning();
+    return returnData[0] as NoteType;
   }
 
-  async update(id: string, updateData: Pick<InsertNote, "title">) {
-    const updatedData = await db
+  async update(
+    id: string,
+    updateData: Pick<InsertNote, "title">,
+    dbOrTx: DBOrTx = db,
+  ) {
+    const updatedData = await dbOrTx
       .update(notes)
       .set(updateData)
       .where(eq(notes.id, id))

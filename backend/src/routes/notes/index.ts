@@ -1,8 +1,10 @@
 import { noteRepository } from "@/repositories/note";
+import { noteContentRepository } from "@/repositories/note-content";
 import type { NoteWithContentType } from "@/schemas/note";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 import { create, detail, list, patch, remove } from "./routes";
+import { db } from "@/lib/db";
 
 export const notesRoute = new OpenAPIHono();
 
@@ -35,7 +37,23 @@ notesRoute.openapi(detail, async (c) => {
 
 notesRoute.openapi(create, async (c) => {
   const newNote = c.req.valid("json");
-  const createdNote = await noteRepository.create({ title: newNote.title });
+
+  const createdNote = await db.transaction(async (tx) => {
+    const noteRecord = await noteRepository.create(
+      { title: newNote.title },
+      tx,
+    );
+
+    await noteContentRepository.create(
+      {
+        content: newNote.content,
+        noteId: noteRecord.id,
+      },
+      tx,
+    );
+
+    return noteRecord;
+  });
 
   return c.json(createdNote, 201);
 });

@@ -1,6 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { noteContents } from "./note_content";
+import { noteContents } from "./note-content";
 
 export const notes = pgTable("notes", {
   id: uuid()

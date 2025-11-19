@@ -9,3 +9,4 @@ export const noteContents = pgTable("note_contents", {
 });
 
 export type SelectNoteContent = typeof noteContents.$inferSelect;
+export type InsertNoteContent = typeof noteContents.$inferInsert;
