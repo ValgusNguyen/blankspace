@@ -12,7 +12,7 @@ class NoteContentRepository {
     return returnData[0];
   }
 
-  async update(noteId: string, content: string) {
+  async update(noteId: string, content: string | null) {
     await db
       .update(noteContents)
       .set({ content })
