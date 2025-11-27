@@ -49,6 +49,15 @@ export const NoteUpdateSchema = z
   })
   .openapi("NoteUpdate");
 
+export const ErrorSchema = z
+  .object({
+    message: z.string().openapi({
+      example: "Note with ID 019a6262-34c6-7de2-9e85-e20920ab5196 not found",
+    }),
+  })
+  .optional()
+  .openapi("Error");
+
 export type NoteCreateType = z.infer<typeof NoteCreateSchema>;
 export type NoteUpdateType = z.infer<typeof NoteUpdateSchema>;
 export type NoteType = z.infer<typeof NoteSchema>;

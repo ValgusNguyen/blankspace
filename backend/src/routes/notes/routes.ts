@@ -1,6 +1,7 @@
 import {
-  NoteSchema,
+  ErrorSchema,
   NoteCreateSchema,
+  NoteSchema,
   NoteUpdateSchema,
   NoteWithContentSchema,
 } from "@/schemas/note";
@@ -38,6 +39,14 @@ export const detail = createRoute({
       content: {
         "application/json": {
           schema: NoteWithContentSchema,
+        },
+      },
+    },
+    404: {
+      description: "Note not found",
+      content: {
+        "application/json": {
+          schema: ErrorSchema,
         },
       },
     },
@@ -92,6 +101,14 @@ export const patch = createRoute({
         },
       },
     },
+    404: {
+      description: "Note not found",
+      content: {
+        "application/json": {
+          schema: ErrorSchema,
+        },
+      },
+    },
   },
 });
 
@@ -106,6 +123,14 @@ export const remove = createRoute({
   responses: {
     204: {
       description: "Note delete sucessfully",
+    },
+    404: {
+      description: "Note not found",
+      content: {
+        "application/json": {
+          schema: ErrorSchema,
+        },
+      },
     },
   },
 });
