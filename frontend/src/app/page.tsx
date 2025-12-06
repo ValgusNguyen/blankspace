@@ -1,17 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { MdOutlineSpaceBar, MdDelete } from "react-icons/md";
-import { VscTelescope } from "react-icons/vsc";
-import { PiNotePencil } from "react-icons/pi";
+import { useState } from "react";
 import { CiCirclePlus, CiTimer } from "react-icons/ci";
 import { HiOutlineTag } from "react-icons/hi";
-import { unknown } from "zod";
+import { MdDelete } from "react-icons/md";
+import { PiNotePencil } from "react-icons/pi";
+import { VscTelescope } from "react-icons/vsc";
 
 const NotesApp = () => {
-  const [selectedNote, setSelectedNote] = useState(
-    "Performance",
-  );
-  const [isEditing, setIsEditing] = useState(false);
+  const [selectedNote, setSelectedNote] = useState("Performance");
 
   const notes = [
     {
@@ -41,7 +37,7 @@ const NotesApp = () => {
   ];
 
   const [currentNote, setCurrentNote] = useState(
-    notes.find((note) => note.title === selectedNote) || notes[0]
+    notes.find((note) => note.title === selectedNote) || notes[0],
   );
 
   return (
@@ -87,7 +83,9 @@ const NotesApp = () => {
                       </span>
                     ))}
                   </div>
-                  <p className="text-xs text-black dark:text-white">{note.date}</p>
+                  <p className="text-xs text-black dark:text-white">
+                    {note.date}
+                  </p>
                 </div>
               ))}
             </div>
@@ -132,7 +130,9 @@ const NotesApp = () => {
                 <div className="flex items-center gap-1">
                   <CiTimer />
                   <span>Last edited</span>
-                  <span className="text-black dark:text-white">{currentNote.date}</span>
+                  <span className="text-black dark:text-white">
+                    {currentNote.date}
+                  </span>
                 </div>
               </div>
 
