@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { TextareaHTMLAttributes, useRef, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
@@ -48,6 +48,7 @@ const NotesApp = () => {
   const [newNoteTitle, setNewNoteTitle] = useState("");
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const currentNote =
     notes.find((note) => note.title === selectedNoteTitle) || notes[0];
@@ -94,6 +95,10 @@ const NotesApp = () => {
     setSelectedNoteTitle(newNote.title);
     setIsCreatingNote(false);
     setNewNoteTitle("");
+
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
+    }
   };
 
   const handleCancelNewNote = () => {
@@ -284,6 +289,7 @@ const NotesApp = () => {
       {/* Main Content - Just the textarea */}
       <div className="flex-1 p-6">
         <textarea
+          ref={textAreaRef}
           value={currentNote.content}
           onChange={(e) => handleContentChange(e.target.value)}
           className="w-full h-full outline-none resize-none text-sm leading-relaxed"
