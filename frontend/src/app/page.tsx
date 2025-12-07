@@ -1,5 +1,5 @@
 "use client";
-import { TextareaHTMLAttributes, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
