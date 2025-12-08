@@ -2,7 +2,7 @@
 import mockNotes from "@/data/mockNotes";
 import { DateTime } from "luxon";
 import { useRef, useState } from "react";
-import { LuFilePlus, LuPencil } from "react-icons/lu";
+import { LuFilePlus, LuPencil, LuTrash2 } from "react-icons/lu";
 import { UUIDTypes, v7 as uuidv7 } from "uuid";
 
 type Note = {
@@ -69,6 +69,15 @@ const NotesApp = () => {
     setEditedNoteId(null);
   };
 
+  const handleDeleteNote = (noteId: UUIDTypes) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
+
+    if (currentNote.id === noteId && notes.length > 1) {
+      const remainingNotes = notes.filter((note) => note.id !== noteId);
+      setCurrentNote(remainingNotes[0]);
+    }
+  };
+
   return (
     <div className="flex h-screen bg-white text-black">
       {/* Sidebar */}
@@ -112,15 +121,24 @@ const NotesApp = () => {
                   />
                 </div>
               ) : (
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center group">
                   <h3 className="font-medium mb-2">{note.title}</h3>
-                  <LuPencil
-                    className="text-gray-400 hover:text-blue-600"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleEditTitle(note);
-                    }}
-                  />
+                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <LuPencil
+                      className="text-gray-400 hover:text-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditTitle(note);
+                      }}
+                    />
+                    <LuTrash2
+                      className="text-gray-400 hover:text-red-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteNote(note.id);
+                      }}
+                    />
+                  </div>
                 </div>
               )}
               <p className="text-xs text-gray-600">
