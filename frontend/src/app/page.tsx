@@ -8,13 +8,12 @@ import { UUIDTypes, v7 as uuidv7 } from "uuid";
 type Note = {
   id: UUIDTypes;
   title: string;
-  date: Date;
+  updatedAt: Date;
   content: string;
 };
 
 const NotesApp = () => {
   const [notes, setNotes] = useState(mockNotes);
-
   const [currentNote, setCurrentNote] = useState(notes[0]);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [editedNoteId, setEditedNoteId] = useState<UUIDTypes | null>(null);
@@ -36,7 +35,7 @@ const NotesApp = () => {
     const newNote = {
       id: uuidv7(),
       title: "Untitiled",
-      date: DateTime.now().toJSDate(),
+      updatedAt: DateTime.now().toJSDate(),
       content: "",
     };
 
@@ -142,7 +141,7 @@ const NotesApp = () => {
                 </div>
               )}
               <p className="text-xs text-gray-600">
-                {DateTime.fromJSDate(note.date).toLocaleString()}
+                {DateTime.fromJSDate(note.updatedAt).toLocaleString()}
               </p>
             </div>
           ))}
