@@ -1,54 +1,26 @@
 "use client";
+import mockNotes from "@/data/mockNotes";
+import { DateTime } from "luxon";
 import { useRef, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
-import { MdDelete } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
+import { UUIDTypes, v7 as uuidv7 } from "uuid";
+
+type Note = {
+  id: UUIDTypes;
+  title: string;
+  date: Date;
+  content: string;
+};
 
 const NotesApp = () => {
-  const [notes, setNotes] = useState([
-    {
-      title: "Japan Travel",
-      date: "28 Oct 2025",
-      content: "Planning trip to Japan will happen for sure 🙃",
-    },
-    {
-      title: "Project Alpha Kickoff Meeting Summary 🚀",
-      date: "05 Dec 2025",
-      content:
-        "Key takeaways: MVP features finalized. Deadline is end of Q1. Need to schedule follow-up with backend team on API design.",
-    },
-    {
-      title: "Grocery List for the Week 🍎",
-      date: "07 Dec 2025",
-      content:
-        "Milk, eggs, whole-wheat bread, spinach, chicken breast, tomatoes, pasta. Don't forget the dark chocolate!",
-    },
-    {
-      title: "React Hooks Memo: useEffect vs useLayoutEffect",
-      date: "28 Nov 2025",
-      content:
-        "useEffect runs asynchronously after render and paint. useLayoutEffect runs synchronously after render but before paint. Use the latter for DOM measurements.",
-    },
-    {
-      title: "Ideas for Next Vacation Destination 🏝️",
-      date: "10 Oct 2025",
-      content:
-        "Considering Iceland (Northern Lights) or Thailand (beaches and food). Need to check flight prices for February.",
-    },
-    {
-      title: "Book Recommendation: The Martian",
-      date: "01 Dec 2025",
-      content:
-        "Andy Weir's book is a fantastic blend of science and survival. Highly recommend for a thrilling read.",
-    },
-  ]);
+  const [notes, setNotes] = useState(mockNotes);
 
-  const [selectedNoteTitle, setSelectedNoteTitle] = useState("Japan Travel");
-  const [isCreatingNote, setIsCreatingNote] = useState(false);
-  const [newNoteTitle, setNewNoteTitle] = useState("");
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [editedTitle, setEditedTitle] = useState("");
+  const [selectedNoteTitle, setSelectedNoteTitle] = useState(notes[0].title);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [editedNoteId, setEditedNoteId] = useState<UUIDTypes | null>(null);
+  const [editedTitle, setEditedTitle] = useState("");
 
   const currentNote =
     notes.find((note) => note.title === selectedNoteTitle) || notes[0];
@@ -63,47 +35,20 @@ const NotesApp = () => {
     );
   };
 
-  const handleCreateNote = () => {
-    setIsCreatingNote(true);
-    setNewNoteTitle("");
-  };
-
-  const handleSaveNewNote = () => {
-    const trimmedTitle = newNoteTitle.trim();
-
-    if (!trimmedTitle) {
-      alert("Please enter a note title!");
-      return;
-    }
-
-    if (notes.some((note) => note.title === trimmedTitle)) {
-      alert("A note with this title already exists!");
-      return;
-    }
-
+  const handleNewNote = () => {
     const newNote = {
-      title: trimmedTitle,
-      date: new Date().toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }),
+      id: uuidv7(),
+      title: "Untitiled",
+      date: DateTime.now().toJSDate(),
       content: "",
     };
 
     setNotes([newNote, ...notes]);
     setSelectedNoteTitle(newNote.title);
-    setIsCreatingNote(false);
-    setNewNoteTitle("");
 
     if (textAreaRef.current) {
       textAreaRef.current.focus();
     }
-  };
-
-  const handleCancelNewNote = () => {
-    setIsCreatingNote(false);
-    setNewNoteTitle("");
   };
 
   const handleDeleteNote = () => {
@@ -119,52 +64,36 @@ const NotesApp = () => {
     setSelectedNoteTitle(updatedNotes[0].title);
   };
 
-  const handleEditTitle = () => {
-    setIsEditingTitle(true);
-    setEditedTitle(currentNote.title);
+  const handleEditTitle = (note: Note) => {
+    setEditedNoteId(note.id);
+    setEditedTitle(note.title);
   };
 
   const handleSaveTitle = () => {
     const trimmedTitle = editedTitle.trim();
-
     if (!trimmedTitle) {
       alert("Please enter a note title!");
       return;
     }
 
-    if (
-      trimmedTitle !== currentNote.title &&
-      notes.some((note) => note.title === trimmedTitle)
-    ) {
-      alert("A note with this title already exists!");
-      return;
-    }
-
     setNotes((prevNotes) =>
       prevNotes.map((note) =>
-        note.title === selectedNoteTitle
-          ? { ...note, title: trimmedTitle }
-          : note,
+        note.id === editedNoteId ? { ...note, title: trimmedTitle } : note,
       ),
     );
-    setSelectedNoteTitle(trimmedTitle);
-    setIsEditingTitle(false);
-  };
 
-  const handleCancelEditTitle = () => {
-    setIsEditingTitle(false);
-    setEditedTitle("");
+    setSelectedNoteTitle(trimmedTitle);
+    setEditedNoteId(null);
   };
 
   return (
     <div className="flex h-screen bg-white text-black">
       {/* Sidebar */}
       <div className="w-80 border-r border-gray-200 flex flex-col">
-        {/* Create Note Button */}
+        {/* New Note Button */}
         <div className="p-4 border-b border-gray-200">
           <button
-            onClick={handleCreateNote}
-            disabled={isCreatingNote}
+            onClick={handleNewNote}
             className="flex items-center cursor-pointer justify-center w-full bg-[#ca8f75] text-black py-2 px-4 rounded-lg hover:bg-[#9e664e] transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <CiCirclePlus className="text-xl" />
@@ -172,106 +101,31 @@ const NotesApp = () => {
           </button>
         </div>
 
-        {/* Create Note Form */}
-        {isCreatingNote && (
-          <div className="p-4 border-b border-gray-200 bg-blue-50">
-            <input
-              type="text"
-              value={newNoteTitle}
-              onChange={(e) => setNewNoteTitle(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveNewNote();
-                if (e.key === "Escape") handleCancelNewNote();
-              }}
-              placeholder="Enter note title..."
-              className="w-full px-3 py-2 border border-gray-300 rounded mb-2 outline-none focus:ring-2 focus:ring-blue-500"
-              autoFocus
-            />
-            <div className="flex gap-2">
-              <button
-                onClick={handleSaveNewNote}
-                className="flex-1 px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
-              >
-                Save
-              </button>
-              <button
-                onClick={handleCancelNewNote}
-                className="flex-1 px-3 py-1 text-sm bg-gray-300 text-black rounded hover:bg-gray-400 cursor-pointer"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Edit Title Form */}
-        {isEditingTitle && (
-          <div className="p-4 border-b border-gray-200 bg-green-50">
-            <label className="text-xs font-medium text-gray-700 mb-1 block">
-              Edit Title
-            </label>
-            <input
-              type="text"
-              value={editedTitle}
-              onChange={(e) => setEditedTitle(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSaveTitle();
-                if (e.key === "Escape") handleCancelEditTitle();
-              }}
-              className="w-full px-3 py-2 border border-gray-300 rounded mb-2 outline-none focus:ring-2 focus:ring-green-500"
-              autoFocus
-            />
-            <div className="flex gap-2">
-              <button
-                onClick={handleSaveTitle}
-                className="flex-1 px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
-              >
-                Save
-              </button>
-              <button
-                onClick={handleCancelEditTitle}
-                className="flex-1 px-3 py-1 text-sm bg-gray-300 text-black rounded hover:bg-gray-400 cursor-pointer"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* Selected Note Actions */}
-        {!isCreatingNote && !isEditingTitle && (
-          <div className="p-4 border-b border-gray-200 bg-gray-50">
-            <div className="text-xs font-medium text-gray-500 mb-2">
-              Selected Note
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={handleEditTitle}
-                className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100 cursor-pointer"
-                title="Edit title"
-              >
-                <FiEdit2 />
-                <span>Edit</span>
-              </button>
-              <button
-                onClick={handleDeleteNote}
-                className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm text-red-600 bg-white border border-red-300 rounded hover:bg-red-50 cursor-pointer"
-              >
-                <MdDelete />
-                <span>Delete</span>
-              </button>
-            </div>
-            <div className="text-xs text-gray-500 mt-2">
-              Last edited: {currentNote.date}
-            </div>
+        <div className="p-4 border-b border-gray-200 bg-gray-50">
+          <div className="text-xs font-medium text-gray-500 mb-2">
+            Selected Note
           </div>
-        )}
+          <div className="flex gap-2">
+            <button
+              onClick={handleDeleteNote}
+              className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm text-red-600 bg-white border border-red-300 rounded hover:bg-red-50 cursor-pointer"
+            >
+              <MdDelete />
+              <span>Delete</span>
+            </button>
+          </div>
+          <div className="text-xs text-gray-500 mt-2">
+            Last edited:
+            {DateTime.fromJSDate(currentNote.date).toLocaleString()}
+          </div>
+        </div>
 
         {/* Notes List */}
         <div className="flex-1 overflow-y-auto">
           {notes.map((note) => (
             <div
-              key={note.title}
+              key={note.id}
               className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
                 selectedNoteTitle === note.title
                   ? "bg-blue-50 border-l-4 border-l-blue-900"
@@ -279,8 +133,36 @@ const NotesApp = () => {
               }`}
               onClick={() => setSelectedNoteTitle(note.title)}
             >
-              <h3 className="font-medium mb-2">{note.title}</h3>
-              <p className="text-xs text-gray-600">{note.date}</p>
+              {editedNoteId === note.id ? (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={editedTitle}
+                    onChange={(e) => setEditedTitle(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleSaveTitle();
+                      if (e.key === "Escape") setEditedNoteId(null);
+                    }}
+                    className="flex-1 px-1 py-0.5 border border-gray-400 rounded outline-none text-sm"
+                    autoFocus
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              ) : (
+                <div className="flex justify-between items-center">
+                  <h3 className="font-medium mb-2">{note.title}</h3>
+                  <FiEdit2
+                    className="text-gray-400 hover:text-blue-600"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditTitle(note);
+                    }}
+                  />
+                </div>
+              )}
+              <p className="text-xs text-gray-600">
+                {DateTime.fromJSDate(note.date).toLocaleString()}
+              </p>
             </div>
           ))}
         </div>
