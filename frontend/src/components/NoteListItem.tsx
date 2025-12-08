@@ -51,7 +51,7 @@ const NoteListItem = ({
       ) : (
         <div className="flex justify-between items-center group">
           <h3 className="font-medium mb-2">{note.title}</h3>
-          <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex gap-2">
             <LuPencil
               className="text-gray-400 hover:text-blue-600 cursor-pointer"
               onClick={(e) => {

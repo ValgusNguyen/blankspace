@@ -3,7 +3,7 @@ import NoteListItem from "@/components/NoteListItem";
 import mockNotes from "@/data/mockNotes";
 import { useNotes } from "@/hooks/useNote";
 import { Note } from "@/types/note";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LuFilePlus } from "react-icons/lu";
 import { UUIDTypes } from "uuid";
 
@@ -21,12 +21,19 @@ const NotesApp = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [editingNoteId, setEditingNoteId] = useState<UUIDTypes | null>(null);
   const [editedTitle, setEditedTitle] = useState("");
+  const [shouldFocus, setShouldFocus] = useState(false);
 
-  const handleNewNote = useCallback(() => {
+  useEffect(() => {
+    if (shouldFocus && textAreaRef.current) {
+      textAreaRef.current.focus();
+      setShouldFocus(false);
+    }
+  }, [shouldFocus, currentNoteId]);
+
+  const handleNewNote = () => {
     createNote();
-    // Focus textarea after state update
-    setTimeout(() => textAreaRef.current?.focus(), 0);
-  }, [createNote]);
+    setShouldFocus(true);
+  };
 
   const handleContentChange = useCallback(
     (newContent: string) => {
@@ -37,10 +44,10 @@ const NotesApp = () => {
     [currentNoteId, updateNote],
   );
 
-  const handleEditTitle = useCallback((note: Note) => {
+  const handleEditTitle = (note: Note) => {
     setEditingNoteId(note.id);
     setEditedTitle(note.title);
-  }, []);
+  };
 
   const handleSaveTitle = useCallback(() => {
     const trimmedTitle = editedTitle.trim();
@@ -55,9 +62,9 @@ const NotesApp = () => {
     }
   }, [editedTitle, editingNoteId, updateNote]);
 
-  const handleCancelEdit = useCallback(() => {
+  const handleCancelEdit = () => {
     setEditingNoteId(null);
-  }, []);
+  };
 
   if (!currentNote) {
     return (

@@ -8,7 +8,7 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   title: "Blankspace",
-  description: "The blank space where idea bloom",
+  description: "The blank space where ideas bloom",
 };
 
 export default function RootLayout({

@@ -15,9 +15,9 @@ const MOCK_NOTES_COUNT = 20;
 const mockNotes = Array.from({ length: MOCK_NOTES_COUNT }, (_, i) => {
   if (!i) {
     return {
-      id: uuidv7(),
+      id: "00000000-0000-0000-0000-000000000001",
       title: "Japan Travel",
-      updatedAt: faker.date.past(),
+      updatedAt: new Date("2024-01-01T00:00:00.000Z"),
       content: "Planning to go to Japan which definitely there and will happen",
     };
   }
