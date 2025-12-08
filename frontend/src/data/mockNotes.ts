@@ -4,7 +4,7 @@ import { v7 as uuidv7 } from "uuid";
 // NOTE: The issue next reporting is related to date generated in mock which a known issue
 const createRandomNote = () => {
   return {
-    id: uuidv7(),
+    id: uuidv7() as string,
     title: faker.lorem.words({ min: 2, max: 5 }),
     updatedAt: faker.date.past(),
     content: faker.lorem.sentences(),
