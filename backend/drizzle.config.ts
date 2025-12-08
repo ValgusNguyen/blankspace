@@ -1,5 +1,5 @@
+import { env } from "@/lib/env";
 import { defineConfig } from "drizzle-kit";
-import { env } from "@/lib/env/index.ts";
 
 export default defineConfig({
   out: "./src/lib/db/migrations",
@@ -8,4 +8,5 @@ export default defineConfig({
   dbCredentials: {
     url: env.DATABASE_URL,
   },
+  casing: "snake_case",
 });

@@ -1,17 +1,17 @@
-import { createId } from "@paralleldrive/cuid2";
-import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { noteContents } from "./note_content";
+import { relations, sql } from "drizzle-orm";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { noteContents } from "./note-content";
 
 export const notes = pgTable("notes", {
-  id: text()
-    .$defaultFn(() => createId())
+  id: uuid()
+    .default(sql`uuidv7()`)
     .primaryKey(),
   title: text().notNull(),
-  slug: text().unique().notNull(),
-  excerpt: text().notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp().defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export const notesRelations = relations(notes, ({ one }) => ({
@@ -20,3 +20,6 @@ export const notesRelations = relations(notes, ({ one }) => ({
     references: [noteContents.noteId],
   }),
 }));
+
+export type SelectNote = typeof notes.$inferSelect;
+export type InsertNote = typeof notes.$inferInsert;
