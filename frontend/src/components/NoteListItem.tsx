@@ -1,6 +1,5 @@
 import { Note } from "@/types/note";
 import { DateTime } from "luxon";
-import { memo } from "react";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 
 const NoteListItem = ({
@@ -83,4 +82,4 @@ const NoteListItem = ({
   );
 };
 
-export default memo(NoteListItem);
+export default NoteListItem;

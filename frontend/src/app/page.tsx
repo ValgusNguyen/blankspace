@@ -3,7 +3,7 @@ import NoteListItem from "@/components/NoteListItem";
 import mockNotes from "@/data/mockNotes";
 import { useNotes } from "@/hooks/useNote";
 import { Note } from "@/types/note";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAutosave } from "react-autosave";
 import { LuFilePlus } from "react-icons/lu";
 import { UUIDTypes } from "uuid";
@@ -32,7 +32,6 @@ const NotesApp = () => {
         updateNote(currentNoteId, { content: newContent });
       }
     },
-    interval: 500,
   });
 
   useEffect(() => {
@@ -58,7 +57,7 @@ const NotesApp = () => {
     setEditedTitle(note.title);
   };
 
-  const handleSaveTitle = useCallback(() => {
+  const handleSaveTitle = () => {
     const trimmedTitle = editedTitle.trim();
     if (!trimmedTitle) {
       alert("Please enter a note title!");
@@ -69,7 +68,7 @@ const NotesApp = () => {
       updateNote(editingNoteId, { title: trimmedTitle });
       setEditingNoteId(null);
     }
-  }, [editedTitle, editingNoteId, updateNote]);
+  };
 
   const handleCancelEdit = () => {
     setEditingNoteId(null);
