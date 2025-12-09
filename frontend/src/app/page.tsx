@@ -4,6 +4,7 @@ import mockNotes from "@/data/mockNotes";
 import { useNotes } from "@/hooks/useNote";
 import { Note } from "@/types/note";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useAutosave } from "react-autosave";
 import { LuFilePlus } from "react-icons/lu";
 import { UUIDTypes } from "uuid";
 
@@ -22,6 +23,23 @@ const NotesApp = () => {
   const [editingNoteId, setEditingNoteId] = useState<UUIDTypes | null>(null);
   const [editedTitle, setEditedTitle] = useState("");
   const [shouldFocus, setShouldFocus] = useState(false);
+  const [noteContent, setNoteContent] = useState(currentNote?.content ?? "");
+
+  useAutosave({
+    data: noteContent,
+    onSave: (newContent) => {
+      if (currentNoteId && newContent !== currentNote?.content) {
+        updateNote(currentNoteId, { content: newContent });
+      }
+    },
+    interval: 500,
+  });
+
+  useEffect(() => {
+    if (currentNote) {
+      setNoteContent(currentNote.content);
+    }
+  }, [currentNote]);
 
   useEffect(() => {
     if (shouldFocus && textAreaRef.current) {
@@ -34,15 +52,6 @@ const NotesApp = () => {
     createNote();
     setShouldFocus(true);
   };
-
-  const handleContentChange = useCallback(
-    (newContent: string) => {
-      if (currentNoteId) {
-        updateNote(currentNoteId, { content: newContent });
-      }
-    },
-    [currentNoteId, updateNote],
-  );
 
   const handleEditTitle = (note: Note) => {
     setEditingNoteId(note.id);
@@ -116,8 +125,8 @@ const NotesApp = () => {
       <main className="flex-1 p-6">
         <textarea
           ref={textAreaRef}
-          value={currentNote.content}
-          onChange={(e) => handleContentChange(e.target.value)}
+          value={noteContent}
+          onChange={(e) => setNoteContent(e.target.value)}
           className="w-full h-full outline-none resize-none text-sm leading-relaxed"
           placeholder="Start typing your note..."
           aria-label="Note content"
