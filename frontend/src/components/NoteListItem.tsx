@@ -26,7 +26,7 @@ const NoteListItem = ({
   onCancelEdit: () => void;
 }) => {
   return (
-    <div
+    <li
       className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
         isActive ? "bg-blue-50 border-l-4 border-l-blue-900" : ""
       }`}
@@ -38,7 +38,7 @@ const NoteListItem = ({
             type="text"
             value={editedTitle}
             onChange={(e) => onTitleChange(e.target.value)}
-            onBlur={() => onSaveTitle()}
+            onBlur={onSaveTitle}
             onKeyDown={(e) => {
               if (e.key === "Enter") onSaveTitle();
               if (e.key === "Escape") onCancelEdit();
@@ -52,27 +52,33 @@ const NoteListItem = ({
         <div className="flex justify-between items-center group">
           <h3 className="font-medium mb-2">{note.title}</h3>
           <div className="flex gap-2">
-            <LuPencil
+            <button
+              aria-label={`Edit ${note.title}`}
               className="text-gray-400 hover:text-blue-600 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onEdit();
               }}
-            />
-            <LuTrash2
+            >
+              <LuPencil />
+            </button>
+            <button
+              aria-label={`Delete ${note.title}`}
               className="text-gray-400 hover:text-red-600 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
               }}
-            />
+            >
+              <LuTrash2 />
+            </button>
           </div>
         </div>
       )}
       <p className="text-xs text-gray-600">
         {DateTime.fromJSDate(note.updatedAt).toLocaleString()}
       </p>
-    </div>
+    </li>
   );
 };
 

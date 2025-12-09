@@ -92,21 +92,23 @@ const NotesApp = () => {
 
         {/* Notes List */}
         <nav className="flex-1 overflow-y-auto">
-          {notes.map((note) => (
-            <NoteListItem
-              key={note.id}
-              note={note}
-              isActive={currentNoteId === note.id}
-              isEditing={editingNoteId === note.id}
-              editedTitle={editedTitle}
-              onSelect={() => setCurrentNoteId(note.id)}
-              onEdit={() => handleEditTitle(note)}
-              onDelete={() => deleteNote(note.id)}
-              onTitleChange={setEditedTitle}
-              onSaveTitle={handleSaveTitle}
-              onCancelEdit={handleCancelEdit}
-            />
-          ))}
+          <ul>
+            {notes.map((note) => (
+              <NoteListItem
+                key={note.id}
+                note={note}
+                isActive={currentNoteId === note.id}
+                isEditing={editingNoteId === note.id}
+                editedTitle={editedTitle}
+                onSelect={() => setCurrentNoteId(note.id)}
+                onEdit={() => handleEditTitle(note)}
+                onDelete={() => deleteNote(note.id)}
+                onTitleChange={setEditedTitle}
+                onSaveTitle={handleSaveTitle}
+                onCancelEdit={handleCancelEdit}
+              />
+            ))}
+          </ul>
         </nav>
       </aside>
 
