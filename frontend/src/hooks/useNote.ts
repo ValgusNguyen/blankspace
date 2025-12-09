@@ -5,7 +5,7 @@ import { UUIDTypes, v7 as uuidv7 } from "uuid";
 
 export const useNotes = (initialNotes: Note[]) => {
   const [notes, setNotes] = useState(initialNotes);
-  const [currentNoteId, setCurrentNoteId] = useState<string | null>(
+  const [currentNoteId, setCurrentNoteId] = useState<UUIDTypes | null>(
     initialNotes[0]?.id,
   );
 

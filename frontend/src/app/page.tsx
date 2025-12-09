@@ -1,11 +1,11 @@
 "use client";
-import NoteListItem from "@/components/NoteListItem";
+import NoteEditor from "@/components/notes/NoteEditor";
+import Sidebar from "@/components/notes/Sidebar";
 import mockNotes from "@/data/mockNotes";
 import { useNotes } from "@/hooks/useNote";
 import { Note } from "@/types/note";
 import { useEffect, useRef, useState } from "react";
 import { useAutosave } from "react-autosave";
-import { LuFilePlus } from "react-icons/lu";
 import { UUIDTypes } from "uuid";
 
 const NotesApp = () => {
@@ -19,11 +19,11 @@ const NotesApp = () => {
     deleteNote,
   } = useNotes(mockNotes);
 
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [editingNoteId, setEditingNoteId] = useState<UUIDTypes | null>(null);
   const [editedTitle, setEditedTitle] = useState("");
   const [shouldFocus, setShouldFocus] = useState(false);
-  const [noteContent, setNoteContent] = useState(currentNote?.content ?? "");
+  const [noteContent, setNoteContent] = useState("");
 
   useAutosave({
     data: noteContent,
@@ -37,6 +37,8 @@ const NotesApp = () => {
   useEffect(() => {
     if (currentNote) {
       setNoteContent(currentNote.content);
+    } else {
+      setNoteContent("");
     }
   }, [currentNote]);
 
@@ -74,63 +76,38 @@ const NotesApp = () => {
     setEditingNoteId(null);
   };
 
-  if (!currentNote) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        No notes available
-      </div>
-    );
-  }
-
   return (
     <div className="flex h-screen bg-white text-black">
-      {/* Sidebar */}
-      <aside className="w-80 border-r border-gray-200 flex flex-col">
-        {/* New Note Button */}
-        <header className="p-4 border-b border-gray-200">
-          <button
-            onClick={handleNewNote}
-            className="flex items-center cursor-pointer justify-center w-full bg-green-400 text-black p-4 rounded-lg hover:bg-green-500 transition"
-            aria-label="Create new note"
-          >
-            <LuFilePlus className="text-xl" />
-            <span className="pl-1.5">Note</span>
-          </button>
-        </header>
+      <Sidebar
+        notes={notes}
+        currentNoteId={currentNoteId}
+        editingNoteId={editingNoteId}
+        editedTitle={editedTitle}
+        onNewNote={handleNewNote}
+        onSelectNote={setCurrentNoteId}
+        onEditNote={handleEditTitle}
+        onDeleteNote={deleteNote}
+        onTitleChange={setEditedTitle}
+        onSaveTitle={handleSaveTitle}
+        onCancelEdit={handleCancelEdit}
+      />
 
-        {/* Notes List */}
-        <nav className="flex-1 overflow-y-auto">
-          <ul>
-            {notes.map((note) => (
-              <NoteListItem
-                key={note.id}
-                note={note}
-                isActive={currentNoteId === note.id}
-                isEditing={editingNoteId === note.id}
-                editedTitle={editedTitle}
-                onSelect={() => setCurrentNoteId(note.id)}
-                onEdit={() => handleEditTitle(note)}
-                onDelete={() => deleteNote(note.id)}
-                onTitleChange={setEditedTitle}
-                onSaveTitle={handleSaveTitle}
-                onCancelEdit={handleCancelEdit}
-              />
-            ))}
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 p-6">
-        <textarea
-          ref={textAreaRef}
-          value={noteContent}
-          onChange={(e) => setNoteContent(e.target.value)}
-          className="w-full h-full outline-none resize-none text-sm leading-relaxed"
-          placeholder="Start typing your note..."
-          aria-label="Note content"
+      {currentNote ? (
+        <NoteEditor
+          textAreaRef={textAreaRef}
+          noteContent={noteContent}
+          onContentChange={setNoteContent}
         />
-      </main>
+      ) : (
+        <main className="flex-1 p-6 flex items-center justify-center text-center text-gray-500">
+          <div>
+            <h1 className="text-2xl font-semibold">No note selected</h1>
+            <p>
+              Select a note from the list or create a new one to get started.
+            </p>
+          </div>
+        </main>
+      )}
     </div>
   );
 };
