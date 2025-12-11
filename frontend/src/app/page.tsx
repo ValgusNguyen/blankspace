@@ -3,9 +3,6 @@ import NoteEditor from "@/components/notes/NoteEditor";
 import Sidebar from "@/components/notes/Sidebar";
 import mockNotes from "@/data/mockNotes";
 import { useNotes } from "@/hooks/useNote";
-import { Note } from "@/types/note";
-import { useState } from "react";
-import { UUIDTypes } from "uuid";
 
 const NotesApp = () => {
   const {
@@ -18,33 +15,8 @@ const NotesApp = () => {
     deleteNote,
   } = useNotes(mockNotes);
 
-  const [editingNoteId, setEditingNoteId] = useState<UUIDTypes | null>(null);
-  const [editedTitle, setEditedTitle] = useState("");
-
   const handleNewNote = () => {
     createNote();
-  };
-
-  const handleEditTitle = (note: Note) => {
-    setEditingNoteId(note.id);
-    setEditedTitle(note.title);
-  };
-
-  const handleSaveTitle = () => {
-    const trimmedTitle = editedTitle.trim();
-    if (!trimmedTitle) {
-      alert("Please enter a note title!");
-      return;
-    }
-
-    if (editingNoteId) {
-      updateNote(editingNoteId, { title: trimmedTitle });
-      setEditingNoteId(null);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setEditingNoteId(null);
   };
 
   return (
@@ -52,15 +24,10 @@ const NotesApp = () => {
       <Sidebar
         notes={notes}
         currentNoteId={currentNoteId}
-        editingNoteId={editingNoteId}
-        editedTitle={editedTitle}
         onNewNote={handleNewNote}
         onSelectNote={setCurrentNoteId}
-        onEditNote={handleEditTitle}
         onDeleteNote={deleteNote}
-        onTitleChange={setEditedTitle}
-        onSaveTitle={handleSaveTitle}
-        onCancelEdit={handleCancelEdit}
+        onUpdateNote={updateNote}
       />
 
       {currentNote ? (

@@ -1,33 +1,50 @@
 import { Note } from "@/types/note";
 import { DateTime } from "luxon";
+import { useState } from "react";
+import { UUIDTypes } from "uuid";
 import NoteListItemDisplay from "./NoteListItemDisplay";
 import NoteListItemEditor from "./NoteListItemEditor";
 
 interface NoteListItemProps {
   note: Note;
   isActive: boolean;
-  isEditing: boolean;
-  editedTitle: string;
   onSelect: () => void;
-  onEdit: () => void;
   onDelete: () => void;
-  onTitleChange: (title: string) => void;
-  onSaveTitle: () => void;
-  onCancelEdit: () => void;
+  onUpdateNote: (id: UUIDTypes, updates: Partial<Omit<Note, "id">>) => void;
 }
 
 const NoteListItem = ({
   note,
   isActive,
-  isEditing,
-  editedTitle,
   onSelect,
-  onEdit,
   onDelete,
-  onTitleChange,
-  onSaveTitle,
-  onCancelEdit,
+  onUpdateNote,
 }: NoteListItemProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(note.title);
+
+  const handleSaveTitle = () => {
+    const trimmedTitle = editedTitle.trim();
+    if (!trimmedTitle) {
+      alert("Please enter a note title!");
+      return;
+    }
+
+    if (trimmedTitle !== note.title) {
+      onUpdateNote(note.id, { title: trimmedTitle });
+    }
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedTitle(note.title);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
   return (
     <li
       className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
@@ -38,12 +55,16 @@ const NoteListItem = ({
       {isEditing ? (
         <NoteListItemEditor
           editedTitle={editedTitle}
-          onTitleChange={onTitleChange}
-          onSaveTitle={onSaveTitle}
-          onCancelEdit={onCancelEdit}
+          onTitleChange={setEditedTitle}
+          onSaveTitle={handleSaveTitle}
+          onCancelEdit={handleCancelEdit}
         />
       ) : (
-        <NoteListItemDisplay note={note} onEdit={onEdit} onDelete={onDelete} />
+        <NoteListItemDisplay
+          note={note}
+          onEdit={handleEdit}
+          onDelete={onDelete}
+        />
       )}
       <p className="text-xs text-gray-600">
         {DateTime.fromJSDate(note.updatedAt).toLocaleString()}

@@ -6,15 +6,10 @@ import SidebarHeader from "./SidebarHeader";
 interface SidebarProps {
   notes: Note[];
   currentNoteId: UUIDTypes | null;
-  editingNoteId: UUIDTypes | null;
-  editedTitle: string;
   onNewNote: () => void;
   onSelectNote: (id: UUIDTypes) => void;
-  onEditNote: (note: Note) => void;
   onDeleteNote: (id: UUIDTypes) => void;
-  onTitleChange: (title: string) => void;
-  onSaveTitle: () => void;
-  onCancelEdit: () => void;
+  onUpdateNote: (id: UUIDTypes, updates: Partial<Omit<Note, "id">>) => void;
 }
 
 const Sidebar = (props: SidebarProps) => {
@@ -24,14 +19,9 @@ const Sidebar = (props: SidebarProps) => {
       <NoteList
         notes={props.notes}
         currentNoteId={props.currentNoteId}
-        editingNoteId={props.editingNoteId}
-        editedTitle={props.editedTitle}
         onSelectNote={props.onSelectNote}
-        onEditNote={props.onEditNote}
         onDeleteNote={props.onDeleteNote}
-        onTitleChange={props.onTitleChange}
-        onSaveTitle={props.onSaveTitle}
-        onCancelEdit={props.onCancelEdit}
+        onUpdateNote={props.onUpdateNote}
       />
     </aside>
   );

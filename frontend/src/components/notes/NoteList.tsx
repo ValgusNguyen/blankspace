@@ -2,31 +2,19 @@ import NoteListItem from "./NoteListItem";
 import { Note } from "@/types/note";
 import { UUIDTypes } from "uuid";
 
-interface NoteListProps {
-  notes: Note[];
-  currentNoteId: UUIDTypes | null;
-  editingNoteId: UUIDTypes | null;
-  editedTitle: string;
-  onSelectNote: (id: UUIDTypes) => void;
-  onEditNote: (note: Note) => void;
-  onDeleteNote: (id: UUIDTypes) => void;
-  onTitleChange: (title: string) => void;
-  onSaveTitle: () => void;
-  onCancelEdit: () => void;
-}
-
 const NoteList = ({
   notes,
   currentNoteId,
-  editingNoteId,
-  editedTitle,
   onSelectNote,
-  onEditNote,
   onDeleteNote,
-  onTitleChange,
-  onSaveTitle,
-  onCancelEdit,
-}: NoteListProps) => {
+  onUpdateNote,
+}: {
+  notes: Note[];
+  currentNoteId: UUIDTypes | null;
+  onSelectNote: (id: UUIDTypes) => void;
+  onDeleteNote: (id: UUIDTypes) => void;
+  onUpdateNote: (id: UUIDTypes, updates: Partial<Omit<Note, "id">>) => void;
+}) => {
   return (
     <nav className="flex-1 overflow-y-auto">
       <ul>
@@ -35,14 +23,9 @@ const NoteList = ({
             key={note.id}
             note={note}
             isActive={currentNoteId === note.id}
-            isEditing={editingNoteId === note.id}
-            editedTitle={editedTitle}
             onSelect={() => onSelectNote(note.id)}
-            onEdit={() => onEditNote(note)}
             onDelete={() => onDeleteNote(note.id)}
-            onTitleChange={onTitleChange}
-            onSaveTitle={onSaveTitle}
-            onCancelEdit={onCancelEdit}
+            onUpdateNote={onUpdateNote}
           />
         ))}
       </ul>
