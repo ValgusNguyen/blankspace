@@ -4,8 +4,7 @@ import Sidebar from "@/components/notes/Sidebar";
 import mockNotes from "@/data/mockNotes";
 import { useNotes } from "@/hooks/useNote";
 import { Note } from "@/types/note";
-import { useEffect, useRef, useState } from "react";
-import { useAutosave } from "react-autosave";
+import { useState } from "react";
 import { UUIDTypes } from "uuid";
 
 const NotesApp = () => {
@@ -19,39 +18,11 @@ const NotesApp = () => {
     deleteNote,
   } = useNotes(mockNotes);
 
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [editingNoteId, setEditingNoteId] = useState<UUIDTypes | null>(null);
   const [editedTitle, setEditedTitle] = useState("");
-  const [shouldFocus, setShouldFocus] = useState(false);
-  const [noteContent, setNoteContent] = useState("");
-
-  useAutosave({
-    data: noteContent,
-    onSave: (newContent) => {
-      if (currentNoteId && newContent !== currentNote?.content) {
-        updateNote(currentNoteId, { content: newContent });
-      }
-    },
-  });
-
-  useEffect(() => {
-    if (currentNote) {
-      setNoteContent(currentNote.content);
-    } else {
-      setNoteContent("");
-    }
-  }, [currentNote]);
-
-  useEffect(() => {
-    if (shouldFocus && textAreaRef.current) {
-      textAreaRef.current.focus();
-      setShouldFocus(false);
-    }
-  }, [shouldFocus, currentNoteId]);
 
   const handleNewNote = () => {
     createNote();
-    setShouldFocus(true);
   };
 
   const handleEditTitle = (note: Note) => {
@@ -94,9 +65,9 @@ const NotesApp = () => {
 
       {currentNote ? (
         <NoteEditor
-          textAreaRef={textAreaRef}
-          noteContent={noteContent}
-          onContentChange={setNoteContent}
+          currentContent={currentNote.content}
+          currentNoteId={currentNoteId}
+          updateNote={updateNote}
         />
       ) : (
         <main className="flex-1 p-6 flex items-center justify-center text-center text-gray-500">
