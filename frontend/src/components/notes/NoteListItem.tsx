@@ -47,7 +47,7 @@ const NoteListItem = ({
 
   return (
     <li
-      className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
+      className={`p-4 border-b border-gray-100 cursor-pointer content-visibility-auto hover:bg-gray-50 ${
         isActive ? "bg-blue-50 border-l-4 border-l-blue-900" : ""
       }`}
       onClick={onSelect}
