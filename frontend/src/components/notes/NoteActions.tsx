@@ -1,5 +1,5 @@
 import React from "react";
-import { LuPencil, LuTrash2 } from "react-icons/lu";
+import { SquarePen, Trash } from "lucide-react";
 
 interface NoteActionsProps {
   noteTitle: string;
@@ -25,14 +25,14 @@ const NoteActions = ({ noteTitle, onEdit, onDelete }: NoteActionsProps) => {
         className="text-gray-400 hover:text-blue-600 cursor-pointer"
         onClick={handleEdit}
       >
-        <LuPencil />
+        <SquarePen />
       </button>
       <button
         aria-label={`Delete ${noteTitle}`}
         className="text-gray-400 hover:text-red-600 cursor-pointer"
         onClick={handleDelete}
       >
-        <LuTrash2 />
+        <Trash />
       </button>
     </div>
   );

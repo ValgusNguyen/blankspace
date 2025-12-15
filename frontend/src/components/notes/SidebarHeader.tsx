@@ -1,4 +1,5 @@
-import { LuFilePlus } from "react-icons/lu";
+import { Button } from "../ui/button";
+import { FilePlusCorner } from "lucide-react";
 
 interface SidebarHeaderProps {
   onNewNote: () => void;
@@ -6,15 +7,15 @@ interface SidebarHeaderProps {
 
 const SidebarHeader = ({ onNewNote }: SidebarHeaderProps) => {
   return (
-    <header className="p-4 border-b border-gray-200">
-      <button
+    <header className="border-b border-primary">
+      <Button
         onClick={onNewNote}
-        className="flex items-center cursor-pointer justify-center w-full bg-green-400 text-black p-4 rounded-lg hover:bg-green-500 transition"
-        aria-label="Create new note"
+        size="icon-lg"
+        variant="ghost"
+        aria-label="New note"
       >
-        <LuFilePlus className="text-xl" />
-        <span className="pl-1.5">Note</span>
-      </button>
+        <FilePlusCorner />
+      </Button>
     </header>
   );
 };
