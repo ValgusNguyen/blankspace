@@ -1,15 +1,29 @@
+"use client";
+
 import { Note } from "@/types/note";
 import { DateTime } from "luxon";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const NoteListItem = ({ note }: { note: Note }) => {
+  const pathname = usePathname();
+  const isActive = pathname === `/notes/${note.id}`;
+
   return (
-    <li className="p-4 border-b border-gray-100 cursor-pointer content-visibility-auto hover:bg-gray-50">
-      <a href={`/notes/${note.id}`}>
-        <h3 className="font-medium mb-2">{note.title}</h3>
-        <p className="text-xs text-gray-600">
+    <li>
+      <Link
+        href={`/notes/${note.id}`}
+        className={cn(
+          "block p-4 border-b cursor-pointer content-visibility-auto hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+          isActive && "bg-muted text-primary",
+        )}
+      >
+        <span className="font-medium mb-3">{note.title}</span>
+        <p className="text-xs text-muted-foreground">
           {DateTime.fromJSDate(note.updatedAt).toLocaleString()}
         </p>
-      </a>
+      </Link>
     </li>
   );
 };

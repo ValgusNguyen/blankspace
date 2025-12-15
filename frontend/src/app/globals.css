@@ -45,14 +45,6 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 }
-@theme {
-  --color-bgContrast: #f9f9f9;
-}
-@layer theme {
-  .dark {
-    --color-bgContrast: #071e57;
-  }
-}
 
 @layer utilities {
   .content-visibility-auto {
