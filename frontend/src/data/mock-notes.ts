@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { v7 as uuidv7 } from "uuid";
 
-// NOTE: The issue next reporting is related to date generated in mock which a known issue
 const createRandomNote = () => {
   return {
     id: uuidv7() as string,
@@ -12,7 +11,8 @@ const createRandomNote = () => {
 };
 
 const MOCK_NOTES_COUNT = 20;
-const mockNotes = Array.from({ length: MOCK_NOTES_COUNT }, (_, i) => {
+
+export const mockNotes = Array.from({ length: MOCK_NOTES_COUNT }, (_, i) => {
   if (!i) {
     return {
       id: "00000000-0000-0000-0000-000000000001",
@@ -24,5 +24,3 @@ const mockNotes = Array.from({ length: MOCK_NOTES_COUNT }, (_, i) => {
 
   return createRandomNote();
 });
-
-export default mockNotes;

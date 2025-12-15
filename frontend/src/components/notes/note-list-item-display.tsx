@@ -1,5 +1,5 @@
 import { Note } from "@/types/note";
-import NoteActions from "./NoteActions";
+import NoteActions from "./note-actions";
 
 interface NoteListItemDisplayProps {
   note: Note;
@@ -13,10 +13,6 @@ const NoteListItemDisplay = ({
   onDelete,
 }: NoteListItemDisplayProps) => {
   return (
-    <div className="flex justify-between items-center group">
-      <h3 className="font-medium mb-2">{note.title}</h3>
-      <NoteActions noteTitle={note.title} onEdit={onEdit} onDelete={onDelete} />
-    </div>
   );
 };
 
