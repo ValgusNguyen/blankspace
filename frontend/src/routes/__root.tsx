@@ -1,7 +1,3 @@
-// src/routes/__root.tsx
-/// <reference types="vite/client" />
-// other imports...
-
 import {
   createRootRoute,
   HeadContent,
