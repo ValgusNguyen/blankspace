@@ -1,6 +1,4 @@
-"use client";
-
-import { Note } from "@/types/note";
+import type { Note } from "@/types/note";
 import { useState } from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";

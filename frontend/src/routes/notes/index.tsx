@@ -1,7 +1,7 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
 import { mockNotes } from "@/data/mock-notes";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/notes/")({
   loader: () => {
     throw redirect({
       to: "/notes/$id",

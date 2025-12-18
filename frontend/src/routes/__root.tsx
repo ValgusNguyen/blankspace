@@ -1,10 +1,16 @@
+// src/routes/__root.tsx
+/// <reference types="vite/client" />
+// other imports...
+
 import {
   createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import appCss from "./globals.css?url";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import appCss from "../styles.css?url";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -18,7 +24,7 @@ export const Route = createRootRoute({
     ],
     links: [
       {
-        rel: "sytlesheet",
+        rel: "stylesheet",
         href: appCss,
       },
     ],
@@ -33,7 +39,10 @@ function RootLayout() {
         <HeadContent />
       </head>
       <body>
-        <Outlet />
+        <ThemeProvider>
+          <Outlet />
+        </ThemeProvider>
+        <TanStackRouterDevtools />
         <Scripts />
       </body>
     </html>

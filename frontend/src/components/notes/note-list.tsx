@@ -1,5 +1,5 @@
 import { NoteListItem } from "@/components/notes/note-list-item";
-import { Note } from "@/types/note";
+import type { Note } from "@/types/note";
 
 export const NoteList = ({ notes }: { notes: Note[] }) => {
   return (
