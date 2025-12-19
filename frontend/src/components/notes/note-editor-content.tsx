@@ -7,7 +7,8 @@ export const NoteEditorContent = ({ content }: { content: string }) => {
     extensions: [StarterKit, Image],
     editorProps: {
       attributes: {
-        class: "prose flex-1 focus:outline-none",
+        class:
+          "prose dark:prose-invert prose-img:rounded flex-1 focus:outline-none max-w-3/4",
       },
     },
     content,
