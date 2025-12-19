@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { v7 as uuidv7 } from "uuid";
+import japanTravelContent from "./japan-travel-content.html?raw";
 
 const createRandomNote = () => {
   return {
@@ -32,8 +33,7 @@ export const mockNotes = Array.from({ length: MOCK_NOTES_COUNT }, (_, i) => {
       id: "00000000-0000-0000-0000-000000000001",
       title: "Japan Travel",
       updatedAt: new Date("2024-01-01T00:00:00.000Z"),
-      content:
-        "<p>Planning to go to Japan which definitely there and will happen</p>",
+      content: japanTravelContent,
     };
   }
 
