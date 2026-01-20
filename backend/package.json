@@ -2,8 +2,8 @@
   "name": "backend",
   "type": "module",
   "scripts": {
-    "dev": "bun run --env-file=.env src/server.ts",
-    "debug": "tsx watch --inspect --env-file=.env src/server.ts",
+    "dev": "bun --watch --env-file=.env src/server.ts",
+    "debug": "bun --watch --inspect --env-file=.env src/server.ts",
     "type-check": "tsc",
     "lint": "eslint .",
     "build": "bun run build.js",
